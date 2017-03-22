@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Applied Imagination Test</title>
+        <meta name="description" content="Applied Imagination Test">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html, body {
+                margin: 0px;
+            }
+            header {
+                width: 100%;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1px solid black;
+            }
+            #dataContainer {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+            #itemIndex {
+
+            }
+            .itemContainer {
+                position: relative;
+                width: 240px;
+                height: 150px;
+                margin: 10px;
+                border: 1px solid black;
+            }
+            .itemImage {
+                width: 100%;
+                height: 100%;
+            }
+            .itemName {
+                position: absolute;
+                top: 2px;
+                left: 4px;
+            }
+            .itemPrice {
+                position: absolute;
+                top: 2px;
+                right: 4px;
+            }
+            .itemFooter {
+                background-color: white;
+                border-top: 1px solid black;
+                position: relative;
+                bottom: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h2>Search</h2>
+            <h2>Sort</h2>
+        </header>
+        <body>
+            <div id="dataContainer">
+
+            </div>
+        </body>
+        <script>
+            var data = [
+                {
+                    itemName: "Ursidae",
+                    price: 99.9900,
+                    imageUrl: "",
+                    tags: ["big", "wild"],
+                    color: "blue"
+                },
+                {
+                    itemName: "Canis Lupus",
+                    price: 50.0000,
+                    imageUrl: "",
+                    tags: ["medium", "tame"],
+                    color: "blue"
+                },
+                {
+                    itemName: "Felis catus",
+                    price: 87.6500,
+                    imageUrl: "",
+                    tags: ["small", "tame"],
+                    color: "red"
+                },
+                {
+                    itemName: "Loxodonta",
+                    price: 9000.0000,
+                    imageUrl: "",
+                    tags: ["big", "wild"],
+                    color: "red"
+                },
+                {
+                    itemName: "Panthera Tigris",
+                    price: 9750.4567,
+                    imageUrl: "",
+                    tags: ["big", "wild"],
+                    color: "yellow"
+                },
+                {
+                    itemName: "Cetacea",
+                    price: 10000.0000,
+                    imageUrl: "",
+                    tags: ["big", "wild"],
+                    color: "yellow"
+                },
+                {
+                    itemName: "Aquila",
+                    price: 550.5000,
+                    imageUrl: "",
+                    tags: ["small", "wild", "tame"],
+                    color: "yellow"
+                },
+                {
+                    itemName: "Lacertilia",
+                    price: 13.7500,
+                    imageUrl: "",
+                    tags: ["small", "wild", "tame"],
+                    color: "green"
+                }
+            ]
+            var dataContainer = document.getElementById("dataContainer");
+
+            data.forEach(function(item, index) {
+                var listItem = document.createElement("div");
+
+                listItem.classList.add("itemContainer")
+                listItem.id = `itemIndex${index + 1}`;
+                dataContainer.appendChild(listItem);
+
+                listItem.innerHTML = `
+                    <div class="itemImage">
+                        <img src="${item.imageUrl}" alt="" height="100%" width="100%">
+                    </div>
+                    <div class="itemFooter">
+                        <div class="itemName">${item.itemName}</div>
+                        <div class="itemPrice">$${item.price}</div>
+                    </div>
+                `
+            });
+        </script>
+    </body>
+</html>
