@@ -5,9 +5,34 @@
         <title>Applied Imagination Test</title>
         <meta name="description" content="Applied Imagination Test">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <style>
             html, body {
                 margin: 0px;
+            }
+            select {
+                -moz-appearance: none;
+                -webkit-appearance:none;
+                width: 200px;
+                height: 32px;
+                padding-left: 5px;
+                margin-left: 20px;
+                border-radius: 3px 0px 0px 3px;
+                border: 1px solid black;
+            }
+            select::-ms-expand {
+                display: none;
+            }
+            input[type=search] {
+                -moz-appearance:none;
+                -webkit-appearance:none;
+            }
+            input[type="search"] {
+                padding-left: 5px;
+                border: 1px solid black;
+                border-radius: 3px 0px 0px 3px;
+                width: 200px;
+                height: 32px;
             }
             header {
                 width: 100%;
@@ -23,15 +48,41 @@
                 flex-wrap: wrap;
                 margin-top: 10px;
             }
-            #itemIndex {
-
-            }
             .itemContainer {
                 position: relative;
                 width: 240px;
                 height: 150px;
                 margin: 10px;
                 border: 1px solid black;
+                border-radius: 3px;
+            }
+            .itemDefault {
+                width: 100%;
+                height: 100%;
+            }
+            .itemHover {
+                display: none;
+            }
+            #itemIndex1:hover .itemDefault, 
+            #itemIndex2:hover .itemDefault,
+            #itemIndex3:hover .itemDefault,
+            #itemIndex4:hover .itemDefault,
+            #itemIndex5:hover .itemDefault,
+            #itemIndex6:hover .itemDefault,
+            #itemIndex7:hover .itemDefault,
+            #itemIndex8:hover .itemDefault {
+                display: none;
+            }
+            #itemIndex1:hover .itemHover,
+            #itemIndex2:hover .itemHover,
+            #itemIndex3:hover .itemHover,
+            #itemIndex4:hover .itemHover,
+            #itemIndex5:hover .itemHover,
+            #itemIndex6:hover .itemHover,
+            #itemIndex7:hover .itemHover,
+            #itemIndex8:hover .itemHover {
+                display: flex;
+                flex-direction: column;
             }
             .itemImage {
                 width: 100%;
@@ -52,97 +103,262 @@
                 border-top: 1px solid black;
                 position: relative;
                 bottom: 24px;
+                height: 15%;
+            }
+            .itemHoverHeader {
+                flex-direction: row;
+                display: flex;
+                justify-content: space-between;
+            }
+            .itemHoverName {
+                margin-left: 4px;
+                margin-top: 2px;
+            }
+            .itemHoverPrice {
+                margin-right: 4px;
+                margin-top: 2px;
+            }
+            .quantityInput {
+                text-align: center;
+                margin-top: 18%;
+            }
+            .qtyInput {
+                width: 20px;
+                text-align: center;
+            }
+            .searchIcon {
+                border: 1px solid black;
+                height: 14px;
+                padding: 8px;
+                margin-left: -1px;
+                border-radius: 0px 3px 3px 0px;
+            }
+            @media (max-width: 450px) {
+                input[type="search"], select {
+                    max-width: 90px;
+                }
             }
         </style>
     </head>
     <body>
         <header>
-            <h2>Search</h2>
-            <h2>Sort</h2>
+            <input id="searchInput" type="search" placeholder="Search">
+            <div class="searchIcon"><i class="fa fa-search" aria-hidden="true" onclick="focusSearchInput()"></i></div>
+            <select id="dropDown" name="dropDown">
+                <option value="" selected disabled>Sort By</option>
+                <option value="name">Name</option> 
+                <option value="price">Price</option> 
+                <option value="color">Color</option> 
+            </select>
+            <div class="searchIcon"><i class="fa fa-chevron-down" aria-hidden="true" onclick="focusSelectInput()"></i></div>
         </header>
         <body>
             <div id="dataContainer">
-
+                
             </div>
         </body>
         <script>
-            var data = [
+            var mockData = [
                 {
                     itemName: "Ursidae",
-                    price: 99.9900,
-                    imageUrl: "",
+                    price: 99.99,
+                    imageUrl: "http://lorempixel.com/output/nature-q-c-240-150-5.jpg",
                     tags: ["big", "wild"],
                     color: "blue"
                 },
                 {
                     itemName: "Canis Lupus",
-                    price: 50.0000,
-                    imageUrl: "",
+                    price: 50,
+                    imageUrl: "http://lorempixel.com/output/nature-q-c-240-150-4.jpg",
                     tags: ["medium", "tame"],
                     color: "blue"
                 },
                 {
                     itemName: "Felis catus",
-                    price: 87.6500,
-                    imageUrl: "",
+                    price: 87.65,
+                    imageUrl: "http://lorempixel.com/output/nature-q-c-240-150-2.jpg",
                     tags: ["small", "tame"],
                     color: "red"
                 },
                 {
                     itemName: "Loxodonta",
-                    price: 9000.0000,
-                    imageUrl: "",
+                    price: 9000,
+                    imageUrl: "http://lorempixel.com/output/nature-q-c-240-150-5.jpg",
                     tags: ["big", "wild"],
                     color: "red"
                 },
                 {
                     itemName: "Panthera Tigris",
                     price: 9750.4567,
-                    imageUrl: "",
+                    imageUrl: "http://lorempixel.com/output/city-q-c-240-150-10.jpg",
                     tags: ["big", "wild"],
                     color: "yellow"
                 },
                 {
                     itemName: "Cetacea",
-                    price: 10000.0000,
-                    imageUrl: "",
+                    price: 10000,
+                    imageUrl: "http://lorempixel.com/output/food-q-c-240-150-8.jpg",
                     tags: ["big", "wild"],
                     color: "yellow"
                 },
                 {
                     itemName: "Aquila",
-                    price: 550.5000,
-                    imageUrl: "",
+                    price: 550.50,
+                    imageUrl: "http://lorempixel.com/output/city-q-c-240-150-5.jpg",
                     tags: ["small", "wild", "tame"],
                     color: "yellow"
                 },
                 {
                     itemName: "Lacertilia",
-                    price: 13.7500,
-                    imageUrl: "",
+                    price: 13.75,
+                    imageUrl: "http://lorempixel.com/output/sports-q-c-240-150-7.jpg",
                     tags: ["small", "wild", "tame"],
                     color: "green"
                 }
             ]
             var dataContainer = document.getElementById("dataContainer");
+            var searchInput = document.getElementById("searchInput");
+            var dropDown = document.getElementById("dropDown");
+            var sortResults = [];
+            var searchResults = [];
 
-            data.forEach(function(item, index) {
-                var listItem = document.createElement("div");
+            generateListItems(mockData, false);
 
-                listItem.classList.add("itemContainer")
-                listItem.id = `itemIndex${index + 1}`;
-                dataContainer.appendChild(listItem);
-
-                listItem.innerHTML = `
-                    <div class="itemImage">
-                        <img src="${item.imageUrl}" alt="" height="100%" width="100%">
-                    </div>
-                    <div class="itemFooter">
-                        <div class="itemName">${item.itemName}</div>
-                        <div class="itemPrice">$${item.price}</div>
-                    </div>
-                `
+            dropDown.addEventListener("change", function(e) {
+                searchInput.value = '';
+                sortThroughData(e);
             });
+
+            searchInput.addEventListener("input", function(e) {
+                searchThroughData(e);
+            });
+
+            function focusSearchInput() {
+                searchInput.focus();
+            }
+
+            function focusSelectInput() {
+                dropDown.focus();
+            }
+
+            function sortThroughData(e) {
+                sortedResults = [];
+
+                switch (e.target.value) {
+                    case "name":
+                        sortedResults = mockData.sort(function(a, b) {
+                            var nameA = a.itemName.toUpperCase();
+                            var nameB = b.itemName.toUpperCase();
+                            if (nameA < nameB) {
+                                return -1;
+                            }
+                            if (nameA > nameB) {
+                                return 1;
+                            }
+
+                            return 0;
+                        });
+                        break;
+                    case "price":
+                        sortedResults = mockData.sort(function(a, b) {
+                            var priceA = a.price;
+                            var priceB = b.price;
+                            if (priceA < priceB) {
+                                return -1;
+                            }
+                            if (priceA > priceB) {
+                                return 1;
+                            }
+
+                            return 0;
+                        });
+                        break;
+                    case "color":
+                        sortedResults = mockData.sort(function(a, b) {
+                            var colorA = a.color.toUpperCase();
+                            var colorB = b.color.toUpperCase();
+                            if (colorA < colorB) {
+                                return -1;
+                            }
+                            if (colorA > colorB) {
+                                return 1;
+                            }
+
+                            return 0;
+                        });
+                        break;
+                    default:  
+                }
+
+                generateListItems(sortedResults);
+            }
+
+            function searchThroughData(e) {
+                searchResults = [];
+
+                if (e.target.value === '') {
+                    generateListItems(mockData);
+                } else {
+                    mockData.forEach(function(item) {
+                        if (item.itemName.toLowerCase().indexOf(e.target.value) >= 0) {
+                            searchResults.push(item);
+                        } else if (item.tags.indexOf(e.target.value) >= 0) {
+                            searchResults.push(item);
+                        }
+                    });
+                    generateListItems(searchResults);
+                }
+            }
+
+            function generateListItems(items) {
+                dataContainer.innerHTML = '';
+
+                items.forEach(function(item, index) {
+                    var listItem = document.createElement("div");
+
+                    listItem.classList.add("itemContainer")
+                    listItem.id = `itemIndex${index + 1}`;
+                    dataContainer.appendChild(listItem);
+
+                    listItem.innerHTML = `
+                        <div class="itemDefault">
+                            <div class="itemImage">
+                                <img src="${item.imageUrl}" alt="" height="100%" width="100%">
+                            </div>
+                            <div class="itemFooter">
+                                <div class="itemName">${item.itemName}</div>
+                                <div class="itemPrice">$${item.price.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        <div class="itemHover">
+                            <div class="itemHoverHeader">
+                                <div class="itemHoverName">${item.itemName}</div>
+                                <div class="itemHoverPrice">$${item.price.toFixed(2)}</div>
+                            </div>
+                            <div class="quantityInput">
+                                <label>
+                                    QTY
+                                    <input class="qtyInput" type="text" value="1"/>
+                                </label>
+                                <button>Add To Cart</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                var qtyInputs = document.querySelectorAll(".qtyInput");
+
+                for (var i = 0; i < qtyInputs.length; i++) {
+                    qtyInputs[i].addEventListener("change", function(e) {
+                        if (e.target.value > 15) {
+                            console.log("THIS", this);
+                            this.value = 15;
+                        } else if (e.target.value < 1) {
+                            this.value = 1;
+                        }
+                    });
+                }
+            }
         </script>
     </body>
 </html>
