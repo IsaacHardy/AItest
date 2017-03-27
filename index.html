@@ -9,6 +9,7 @@
         <style>
             html, body {
                 margin: 0px;
+                background-color: white;
             }
             select {
                 -moz-appearance: none;
@@ -26,6 +27,7 @@
             input[type=search] {
                 -moz-appearance:none;
                 -webkit-appearance:none;
+                color: black;
             }
             input[type="search"] {
                 padding-left: 5px;
@@ -55,13 +57,20 @@
                 margin: 10px;
                 border: 1px solid black;
                 border-radius: 3px;
+                overflow: hidden;
             }
             .itemDefault {
                 width: 100%;
                 height: 100%;
+                -webkit-transition: ease-in-out 0.5s, opacity 3s, visibility 3s;
+                transition: ease-in-out 0.5s, opacity 3s, visibility 3s;
             }
             .itemHover {
-                display: none;
+                transform: translateY(-22px);
+                height: 100%;
+                -webkit-transition: ease-in-out 0.5s, opacity 3s, visibility 3s;
+                transition: ease-in-out 0.5s, opacity 3s, visibility 3s;
+                background-color: lightslategrey;
             }
             #itemIndex1:hover .itemDefault, 
             #itemIndex2:hover .itemDefault,
@@ -71,7 +80,7 @@
             #itemIndex6:hover .itemDefault,
             #itemIndex7:hover .itemDefault,
             #itemIndex8:hover .itemDefault {
-                display: none;
+                transform: translateY(-127px);
             }
             #itemIndex1:hover .itemHover,
             #itemIndex2:hover .itemHover,
@@ -83,6 +92,8 @@
             #itemIndex8:hover .itemHover {
                 display: flex;
                 flex-direction: column;
+                height: 100%;
+                transform: translateY(-150px);
             }
             .itemImage {
                 width: 100%;
@@ -99,11 +110,11 @@
                 right: 4px;
             }
             .itemFooter {
-                background-color: white;
                 border-top: 1px solid black;
                 position: relative;
                 bottom: 24px;
                 height: 15%;
+                background-color: lightslategrey;
             }
             .itemHoverHeader {
                 flex-direction: row;
@@ -226,7 +237,7 @@
 
             dropDown.addEventListener("change", function(e) {
                 searchInput.value = '';
-                sortThroughData(e);
+                selectSortType(e);
             });
 
             searchInput.addEventListener("input", function(e) {
@@ -241,7 +252,7 @@
                 dropDown.focus();
             }
 
-            function sortThroughData(e) {
+            function selectSortType(e) {
                 sortedResults = [];
 
                 switch (e.target.value) {
@@ -249,48 +260,41 @@
                         sortedResults = mockData.sort(function(a, b) {
                             var nameA = a.itemName.toUpperCase();
                             var nameB = b.itemName.toUpperCase();
-                            if (nameA < nameB) {
-                                return -1;
-                            }
-                            if (nameA > nameB) {
-                                return 1;
-                            }
-
-                            return 0;
+                            
+                            return sortData(nameA, nameB);
                         });
                         break;
                     case "price":
                         sortedResults = mockData.sort(function(a, b) {
                             var priceA = a.price;
                             var priceB = b.price;
-                            if (priceA < priceB) {
-                                return -1;
-                            }
-                            if (priceA > priceB) {
-                                return 1;
-                            }
 
-                            return 0;
+                            return sortData(priceA, priceB);
                         });
                         break;
                     case "color":
                         sortedResults = mockData.sort(function(a, b) {
                             var colorA = a.color.toUpperCase();
                             var colorB = b.color.toUpperCase();
-                            if (colorA < colorB) {
-                                return -1;
-                            }
-                            if (colorA > colorB) {
-                                return 1;
-                            }
 
-                            return 0;
+                            return sortData(colorA, colorB);
                         });
                         break;
                     default:  
                 }
 
                 generateListItems(sortedResults);
+            }
+
+            function sortData(a, b) {
+                if (a < b) {
+                    return -1;
+                }
+                if (a > b) {
+                    return 1;
+                }
+
+                return 0;
             }
 
             function searchThroughData(e) {
@@ -346,12 +350,15 @@
                     `;
                 });
 
+                setQuantityLimits();
+                
+            }
+            function setQuantityLimits() {
                 var qtyInputs = document.querySelectorAll(".qtyInput");
 
                 for (var i = 0; i < qtyInputs.length; i++) {
                     qtyInputs[i].addEventListener("change", function(e) {
                         if (e.target.value > 15) {
-                            console.log("THIS", this);
                             this.value = 15;
                         } else if (e.target.value < 1) {
                             this.value = 1;
